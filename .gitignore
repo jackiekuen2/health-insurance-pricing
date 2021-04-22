@@ -6,4 +6,5 @@ __pycache__/
 # trained models
 health-insuranc-pricing/regression_model/trained_models/*.pkl
 
-
+# vscode settings
+.vscode/

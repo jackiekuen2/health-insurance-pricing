@@ -1,0 +1,9 @@
+# pycahce/ Unit test
+__pycache__/
+.tox/
+.pytest_cache/
+
+# trained models
+health-insuranc-pricing/regression_model/trained_models/*.pkl
+
+

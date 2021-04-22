@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<head>
+    <title>Health Insurance Price Prediction</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <style>
+
+        h2, .h2 {
+            font-size: x-large;
+            font-family: monospace;
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 0px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        span {
+            margin-bottom: 10px;
+        }
+
+
+        .slidecontainer {
+            width: 90%;
+            margin-bottom: 0px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background:#d3d3d3;
+            outline: none;
+            opacity: 1;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: steelblue;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        select {
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-center">Health Insurance Price Real-Time Estimation</h1>
+
+    <table class="table" cellpadding="10" margin-left="auto" margin-right="auto">
+        <tr>
+            <td colspan="3">
+                <h2 class="text-center" margin-left="auto" margin-right="auto">Customize your information to get the real-time estimated health insurance price!</h2>
+            </td>
+        </tr>
+        <tr>
+            <td width="300px">
+                <div class="slidecontainer">
+                    <label>Age: <span id="age"></span></label>
+                    <input type="range" min="1" max="99" value="25" class="slider" id="age_range" step="1">
+                </div>
+                <br>
+                <div class="dropdownlist">
+                    <label for="sex">Sex: 
+                        <span>
+                            <select id="sex">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </span>
+                    </label>
+                </div>
+                <br>
+                <div class="slidecontainer">
+                    <label>BMI: <span id="bmi"></span></label>
+                    <input type="range" min="16" max="40" value="23" class="slider" id="bmi_range" step="0.1">
+                </div>
+            </td>
+
+            <td width="300px">
+                <!--Prediction part-->
+                <label>Estimated Price: <span id="estimated_price"></span> USD</label>
+            </td>
+
+            <td width="300px">
+                <div class="slidecontainer">
+                    <label>Children: <span id="children"></span></label>
+                    <input type="range" min="0" max="6" value="0" class="slider" id="children_range" step="1">
+                </div>
+                <br>
+                <div class="dropdownlist">
+                    <label for="smoker">Smoker:
+                        <span>
+                            <select id="smoker">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </span>
+                    </label>
+                </div>
+                <br>
+                <div class="dropdownlist">
+                    <label for="region">Region: <span><select id="region"></select></span></label>
+                </div>
+
+            </td>
+        </tr>
+
+
+
+    </table>
+</body>
+
+<script>
+    // User inputs: sliders and drop-down lists
+    var age_slider = $("#age_range");
+    $("#age").html(age_slider.val());
+    age_slider.change(function(){
+        $("#age").html(age_slider.val());
+    });
+
+    var bmi_slider = $("#bmi_range");
+    $("#bmi").html(bmi_slider.val());
+    bmi_slider.change(function(){
+        $("#bmi").html(bmi_slider.val());
+    });
+
+    var children_slider = $("#children_range");
+    $("#children").html(children_slider.val());
+    children_slider.change(function(){
+        $("#children").html(children_slider.val());
+    });
+
+    var region_options = {
+        southeast: "South East",
+        southwest: "South West",
+        northeast: "North East",
+        northwest: "North West"
+    };
+    var region_selected = $("#region");
+    $.each(region_options, function(val, text){
+        region_selected.append(
+            $('<option></option>').val(val).html(text)
+            );
+    });
+    
+    // Functions to update prediction
+    var logger = '';
+
+    function update_dashboard(price_prediction){
+        $("#estimated_price").html(price_prediction);
+    }
+
+    function fetch_data(){
+        // Store user inputs into JSON format
+        $.getJSON({
+            type: "GET",
+            url: "{{ url_for('background_process') }}",
+            data: {
+                'age': $("#age").html(),
+                'sex': $("#sex option:selected").html().toLowerCase(),
+                'bmi': $("#bmi").html(),
+                'children': $("#children").html(),
+                'smoker': $("#smoker option:selected").html().toLowerCase(),
+                'region': $("#region option:selected").html().toLowerCase().replace(/\s+/g, '')
+            },
+            success: function(data){
+                logger = data.price_prediction
+                update_dashboard(data.price_prediction);
+            }
+        });
+    }
+
+    // Add event listener to capture changes in parameters
+    $(document).mouseup(function(){fetch_data()});
+    $(document).on('change', function(){fetch_data()});
+
+</script>
+</html>

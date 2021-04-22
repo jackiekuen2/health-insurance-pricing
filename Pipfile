@@ -15,7 +15,6 @@ flask-wtf = "*"
 gunicorn = "*"
 joblib = "*"
 scipy = "*"
-wtfforms = "*"
 pytest = "*"
 
 [requires]

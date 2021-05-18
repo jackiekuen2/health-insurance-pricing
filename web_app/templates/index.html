@@ -11,11 +11,28 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <style>
+        .page-content{
+            width: 100%;
+            margin-right: auto;
+            margin-right: auto;
+            display: flex;
+            display: -webkit-flex;
+            background: #5eb2b3;
+            justify-content: center;
+            -o-justify-content:center;
+            align-items: center;
+            -o-align-items: center;
+        }
+
+
+        h1, .h1{
+            font-size: xx-large;
+        }
 
         h2, .h2 {
-            font-size: x-large;
-            font-family: monospace;
-            color: darkblue;
+            font-size: large;
+            font-family: Arial, Helvetica, sans-serif;
+            color: black;
             font-weight: bold;
         }
 
@@ -73,74 +90,110 @@
         select {
             width: 250px;
         }
+
+        .form-v5-content{
+            background: white;
+            width: 770px;
+            border-radius: 8px;
+            -o-border-radius: 8px;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            margin: 120px;
+
+        }
+
+        .form-detail{
+            padding:30px 45px;
+            position:relative;
+            margin-bottom: 40px;
+        }
+
+        .form-row{
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .form-row-last{
+            position: relative;
+            font-size: large;
+            color: darkred;
+        }
+
+
+
+
     </style>
 </head>
 
-<body>
-    <h1 class="text-center">Health Insurance Price Real-Time Estimation</h1>
+<body class="form-v5">
+    <div class="page-content">
+        <div class="form-v5-content">
+            <form class="form-detail">
+                <h1 class="text-center">Health Insurance Price Real-Time Estimation</h1>
 
-    <table class="table" cellpadding="10" margin-left="auto" margin-right="auto">
-        <tr>
-            <td colspan="3">
-                <h2 class="text-center" margin-left="auto" margin-right="auto">Customize your information to get the real-time estimated health insurance price!</h2>
-            </td>
-        </tr>
-        <tr>
-            <td width="300px">
-                <div class="slidecontainer">
-                    <label>Age: <span id="age"></span></label>
-                    <input type="range" min="1" max="99" value="25" class="slider" id="age_range" step="1">
-                </div>
-                <br>
-                <div class="dropdownlist">
-                    <label for="sex">Sex: 
-                        <span>
-                            <select id="sex">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </span>
-                    </label>
-                </div>
-                <br>
-                <div class="slidecontainer">
-                    <label>BMI: <span id="bmi"></span></label>
-                    <input type="range" min="16" max="40" value="23" class="slider" id="bmi_range" step="0.1">
-                </div>
-            </td>
-
-            <td width="300px">
-                <!--Prediction part-->
-                <label>Estimated Price: <span id="estimated_price"></span> USD</label>
-            </td>
-
-            <td width="300px">
-                <div class="slidecontainer">
-                    <label>Children: <span id="children"></span></label>
-                    <input type="range" min="0" max="6" value="0" class="slider" id="children_range" step="1">
-                </div>
-                <br>
-                <div class="dropdownlist">
-                    <label for="smoker">Smoker:
-                        <span>
-                            <select id="smoker">
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </span>
-                    </label>
-                </div>
-                <br>
-                <div class="dropdownlist">
-                    <label for="region">Region: <span><select id="region"></select></span></label>
+                <h2 class="text-center" margin-left="auto" margin-right="auto">Customize your information to get the real-time estimate!</h2>
+                
+                <div class="form-row">
+                    <div class="slidecontainer">
+                        <label>Age: <span id="age"></span></label>
+                        <input type="range" min="1" max="99" value="25" class="slider" id="age_range" step="1">
+                    </div>
                 </div>
 
-            </td>
-        </tr>
+                <div class="form-row">
+                    <div class="dropdownlist">
+                        <label for="sex">Sex: 
+                            <span>
+                                <select id="sex">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </span>
+                        </label>
+                    </div>
+                </div>
 
+                <div class="form-row">
+                    <div class="slidecontainer">
+                        <label>BMI: <span id="bmi"></span></label>
+                        <input type="range" min="16" max="40" value="23" class="slider" id="bmi_range" step="0.1">
+                    </div>
+                </div>
 
+                <div class="form-row">
+                    <div class="slidecontainer">
+                        <label>Children: <span id="children"></span></label>
+                        <input type="range" min="0" max="6" value="0" class="slider" id="children_range" step="1">
+                    </div>
+                </div>
 
-    </table>
+                <div class="form-row">
+                    <div class="dropdownlist">
+                        <label for="smoker">Smoker:
+                            <span>
+                                <select id="smoker">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="dropdownlist">
+                        <label for="region">Region: <span><select id="region"></select></span></label>
+                    </div>
+                </div>
+
+                <div class="form-row-last">
+                    <!--Prediction part-->
+                    <label class="text-center" margin-left="auto" margin-right="auto">Your Estimated Health Insurance Price: <span id="estimated_price"></span> USD</label>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 <script>

@@ -116,13 +116,17 @@
 
         .form-row-last{
             position: relative;
-            font-size: large;
-            color: darkred;
+            font-size: x-large;
+            color: #04a53a;
+            text-align: center;
         }
 
         .image-responsive{
             width: 100%;
             height: auto;
+            padding: 1px;
+            border: 1px;
+            color: grey;
         }
 
     </style>
@@ -132,10 +136,12 @@
     <div class="page-content">
         <div class="form-v5-content">
             <form class="form-detail">
+                <img src="static/health-insurance.jpg" alt="health insurance pricing" id="health_insurance" class="image-responsive">
+                
                 <h1 class="text-center">Health Insurance Price Real-Time Estimation</h1>
 
                 <h2 class="text-center" margin-left="auto" margin-right="auto">Customize your information to get the real-time estimate!</h2>
-                
+
                 <div class="form-row">
                     <div class="slidecontainer">
                         <label>Age: <span id="age"></span></label>
@@ -166,7 +172,7 @@
                 <div class="form-row">
                     <div class="slidecontainer">
                         <label>Children: <span id="children"></span></label>
-                        <input type="range" min="0" max="6" value="0" class="slider" id="children_range" step="1">
+                        <input type="range" min="0" max="10" value="0" class="slider" id="children_range" step="1">
                     </div>
                 </div>
 
@@ -192,7 +198,7 @@
                 <div class="form-row-last">
                     <!--Prediction part-->
                     <label class="text-center" margin-left="auto" margin-right="auto">Your Estimated Health Insurance Price: <span id="estimated_price"></span> USD</label>
-                    <img src="static/health-insurance.jpg" alt="health insurance pricing" id="health_insurance" style="padding: 1px; border: 1px grey;" class="image-responsive">
+
                 </div>
             </form>
         </div>
@@ -201,23 +207,45 @@
 
 <script>
     // User inputs: sliders and drop-down lists
-    var age_slider = $("#age_range");
-    $("#age").html(age_slider.val());
-    age_slider.change(function(){
-        $("#age").html(age_slider.val());
-    });
+    var age_slider = document.getElementById("age_range");
+    var age_output = document.getElementById("age");
+    age_output.innerHTML = age_slider.value; // Display the default value
+    // Update the current slider value each time you drag the slider handle
+    age_slider.oninput = function(){
+        age_output.innerHTML = this.value
+    };
 
-    var bmi_slider = $("#bmi_range");
-    $("#bmi").html(bmi_slider.val());
-    bmi_slider.change(function(){
-        $("#bmi").html(bmi_slider.val());
-    });
+    var bmi_slider = document.getElementById("bmi_range");
+    var bmi_output = document.getElementById("bmi");
+    bmi_output.innerHTML = bmi_slider.value;
+    bmi_slider.oninput = function(){
+        bmi_output.innerHTML = this.value
+    };
 
-    var children_slider = $("#children_range");
-    $("#children").html(children_slider.val());
-    children_slider.change(function(){
-        $("#children").html(children_slider.val());
-    });
+    var children_slider = document.getElementById("children_range");
+    var children_output = document.getElementById("children");
+    children_output.innerHTML = children_slider.value;
+    children_slider.oninput = function(){
+        children_output.innerHTML = this.value
+    };
+
+    // var age_slider = $("#age_range");
+    // $("#age").html(age_slider.val());
+    // age_slider.change(function(){
+    //     $("#age").html(age_slider.val());
+    // });
+
+    // var bmi_slider = $("#bmi_range");
+    // $("#bmi").html(bmi_slider.val());
+    // bmi_slider.change(function(){
+    //     $("#bmi").html(bmi_slider.val());
+    // });
+
+    // var children_slider = $("#children_range");
+    // $("#children").html(children_slider.val());
+    // children_slider.change(function(){
+    //     $("#children").html(children_slider.val());
+    // });
 
     var region_options = {
         southeast: "South East",

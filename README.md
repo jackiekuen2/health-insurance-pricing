@@ -64,8 +64,17 @@ objective index of body weight (kg / m ^ 2) using the ratio of height to weight,
 - smoker: Smoking
 - region: the beneficiary's residential area in the US, northeast, southeast, southwest, northwest.
 
+## Project Workflow
+1. Research Stage with Jupyter Notebook: EDA, Data Visualizations, Base Models Training, Hyperparameters Tuning
+2. Set up virtual environment, and install required packages
+3. Production scripting: config.py, preprocessors.py, pipeline.py, train_pipeline.py, predict.py
+4. Test with PyTest
+5. Design UI with HTML/CSS/JS
+6. Deploy to Heroku
 
-## Preprocessing
+## Data Preprocessing
+1. Outliers removal using IQR method
+2. 
 
 ## Web App
 URL: https://health-insurance-pricing.herokuapp.com/
